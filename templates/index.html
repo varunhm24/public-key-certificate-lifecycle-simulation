@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Public Key Certificate Lifecycle Simulator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="hero">
+
+        <div class="hero-icon">
+            🔐
+        </div>
+
+        <div>
+            <h1>Public Key Certificate Lifecycle Simulator</h1>
+
+            <p class="subtitle">
+                Information Network and Security
+            </p>
+
+            <p>
+                A web-based simulation of the complete
+                lifecycle of a Public Key Infrastructure (PKI)
+                digital certificate.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- START BUTTON -->
+
+    <div class="start-section">
+
+        <a href="/register" class="start-button">
+            🚀 Start Certificate Registration
+        </a>
+
+    </div>
+
+
+    <!-- LIFECYCLE -->
+
+    <h2>🔄 Certificate Lifecycle</h2>
+
+    <p>
+        The system demonstrates how a digital certificate
+        is created, issued, verified and managed throughout
+        its lifecycle.
+    </p>
+
+    <div class="lifecycle">
+
+        <div class="lifecycle-card">
+
+            <div class="stage-number">1</div>
+
+            <div class="stage-icon">🔑</div>
+
+            <h3>Key Generation</h3>
+
+            <p>
+                RSA public and private key pair is generated.
+            </p>
+
+        </div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div class="lifecycle-card">
+
+            <div class="stage-number">2</div>
+
+            <div class="stage-icon">📄</div>
+
+            <h3>CSR</h3>
+
+            <p>
+                Certificate Signing Request is created.
+            </p>
+
+        </div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div class="lifecycle-card">
+
+            <div class="stage-number">3</div>
+
+            <div class="stage-icon">🏛️</div>
+
+            <h3>Issuance</h3>
+
+            <p>
+                CA signs and issues the X.509 certificate.
+            </p>
+
+        </div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div class="lifecycle-card">
+
+            <div class="stage-number">4</div>
+
+            <div class="stage-icon">✅</div>
+
+            <h3>Verification</h3>
+
+            <p>
+                Certificate signature and validity are checked.
+            </p>
+
+        </div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div class="lifecycle-card">
+
+            <div class="stage-number">5</div>
+
+            <div class="stage-icon">♻️</div>
+
+            <h3>Renewal</h3>
+
+            <p>
+                An existing certificate is renewed.
+            </p>
+
+        </div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div class="lifecycle-card">
+
+            <div class="stage-number">6</div>
+
+            <div class="stage-icon">🚫</div>
+
+            <h3>Revocation</h3>
+
+            <p>
+                An active certificate can be revoked.
+            </p>
+
+        </div>
+
+
+        <div class="arrow">→</div>
+
+
+        <div class="lifecycle-card">
+
+            <div class="stage-number">7</div>
+
+            <div class="stage-icon">⏳</div>
+
+            <h3>Expiration</h3>
+
+            <p>
+                Certificate becomes expired after its lifetime.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- APPLICATION MENU -->
+
+    <h2>🛠 Application Menu</h2>
+
+    <div class="menu">
+
+        <a href="/register" class="menu-card">
+
+            <span class="menu-icon">👤</span>
+
+            <span class="menu-title">
+                Register Applicant
+            </span>
+
+            <span class="menu-description">
+                Create keys, CSR and certificate
+            </span>
+
+        </a>
+
+
+        <a href="/dashboard" class="menu-card">
+
+            <span class="menu-icon">📊</span>
+
+            <span class="menu-title">
+                Certificate Dashboard
+            </span>
+
+            <span class="menu-description">
+                Manage and verify certificates
+            </span>
+
+        </a>
+
+
+        <a href="/logs" class="menu-card">
+
+            <span class="menu-icon">📋</span>
+
+            <span class="menu-title">
+                Audit Logs
+            </span>
+
+            <span class="menu-description">
+                View security activity
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- TECHNOLOGY SECTION -->
+
+    <div class="technology">
+
+        <h2>🔒 Security Technologies</h2>
+
+        <div class="tech-list">
+
+            <span>RSA 2048</span>
+
+            <span>SHA-256</span>
+
+            <span>X.509</span>
+
+            <span>CSR</span>
+
+            <span>Root CA</span>
+
+            <span>SQLite</span>
+
+            <span>Python</span>
+
+            <span>Flask</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            Public Key Certificate Lifecycle Simulator
+        </p>
+
+        <p>
+            Information Network and Security • VTU Project
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

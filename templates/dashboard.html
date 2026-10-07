@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div>
+            <h1>📊 Certificate Dashboard</h1>
+
+            <p>
+                Public Key Certificate Lifecycle Management
+            </p>
+        </div>
+
+        <a href="/" class="home-button">
+            🏠 Home
+        </a>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <h2>Certificate Statistics</h2>
+
+    <div class="stats">
+
+        <div class="card active-card">
+
+            <div class="stat-icon">🟢</div>
+
+            <h3>ACTIVE</h3>
+
+            <p>{{ active_count }}</p>
+
+            <span>Currently valid</span>
+
+        </div>
+
+
+        <div class="card revoked-card">
+
+            <div class="stat-icon">🔴</div>
+
+            <h3>REVOKED</h3>
+
+            <p>{{ revoked_count }}</p>
+
+            <span>Access revoked</span>
+
+        </div>
+
+
+        <div class="card expired-card">
+
+            <div class="stat-icon">🟡</div>
+
+            <h3>EXPIRED</h3>
+
+            <p>{{ expired_count }}</p>
+
+            <span>Validity ended</span>
+
+        </div>
+
+
+        <div class="card renewed-card">
+
+            <div class="stat-icon">🔵</div>
+
+            <h3>RENEWED</h3>
+
+            <p>{{ renewed_count }}</p>
+
+            <span>Previous certificates</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- LIFECYCLE -->
+
+    <div class="dashboard-section">
+
+        <h2>🔄 Certificate Lifecycle</h2>
+
+        <div class="dashboard-lifecycle">
+
+            <div class="dashboard-stage">
+                <span>🔑</span>
+                <strong>Keys</strong>
+                <small>Generated</small>
+            </div>
+
+            <div class="lifecycle-arrow">→</div>
+
+            <div class="dashboard-stage">
+                <span>📄</span>
+                <strong>CSR</strong>
+                <small>Created</small>
+            </div>
+
+            <div class="lifecycle-arrow">→</div>
+
+            <div class="dashboard-stage">
+                <span>🏛️</span>
+                <strong>Issuance</strong>
+                <small>CA Signed</small>
+            </div>
+
+            <div class="lifecycle-arrow">→</div>
+
+            <div class="dashboard-stage">
+                <span>✅</span>
+                <strong>Verify</strong>
+                <small>Trusted</small>
+            </div>
+
+            <div class="lifecycle-arrow">→</div>
+
+            <div class="dashboard-stage">
+                <span>♻️</span>
+                <strong>Renew</strong>
+                <small>New Certificate</small>
+            </div>
+
+            <div class="lifecycle-arrow">→</div>
+
+            <div class="dashboard-stage">
+                <span>🚫</span>
+                <strong>Revoke</strong>
+                <small>Invalidated</small>
+            </div>
+
+            <div class="lifecycle-arrow">→</div>
+
+            <div class="dashboard-stage">
+                <span>⏳</span>
+                <strong>Expire</strong>
+                <small>Validity Ended</small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CERTIFICATE TABLE -->
+
+    <div class="dashboard-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>📜 Certificate Records</h2>
+
+                <p>
+                    Manage all certificates stored in the system.
+                </p>
+            </div>
+
+            <a href="/register" class="add-button">
+                + Register Applicant
+            </a>
+
+        </div>
+
+
+        {% if certificates %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>User ID</th>
+
+                        <th>Serial Number</th>
+
+                        <th>Issued</th>
+
+                        <th>Expires</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for certificate in certificates %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ certificate[1] }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            <span class="serial-number">
+                                {{ certificate[2] }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ certificate[3] }}
+                        </td>
+
+                        <td>
+                            {{ certificate[4] }}
+                        </td>
+
+                        <td>
+
+                            {% if certificate[5] == "ACTIVE" %}
+
+                                <span class="status active">
+                                    🟢 ACTIVE
+                                </span>
+
+                            {% elif certificate[5] == "REVOKED" %}
+
+                                <span class="status revoked">
+                                    🔴 REVOKED
+                                </span>
+
+                            {% elif certificate[5] == "EXPIRED" %}
+
+                                <span class="status expired">
+                                    🟡 EXPIRED
+                                </span>
+
+                            {% elif certificate[5] == "RENEWED" %}
+
+                                <span class="status renewed">
+                                    🔵 RENEWED
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                <!-- Details -->
+
+                                <a
+                                    href="/certificate/{{ certificate[0] }}"
+                                    class="action details"
+                                >
+                                    📄 Details
+                                </a>
+
+
+                                <!-- Verify -->
+
+                                <a
+                                    href="/verify/{{ certificate[1] }}"
+                                    class="action verify"
+                                >
+                                    🔍 Verify
+                                </a>
+
+
+                                {% if certificate[5] == "ACTIVE" %}
+
+                                <!-- Renew -->
+
+                                <form
+                                    action="/renew/{{ certificate[1] }}"
+                                    method="POST"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="action renew"
+                                    >
+                                        ♻️ Renew
+                                    </button>
+
+                                </form>
+
+
+                                <!-- Revoke -->
+
+                                <form
+                                    action="/revoke/{{ certificate[1] }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Are you sure you want to revoke this certificate?');"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="reason"
+                                        value="User No Longer Authorized"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="action revoke"
+                                    >
+                                        🚫 Revoke
+                                    </button>
+
+                                </form>
+
+
+                                <!-- Expire -->
+
+                                <form
+                                    action="/expire/{{ certificate[1] }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Simulate expiration of this certificate?');"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="action expire"
+                                    >
+                                        ⏳ Expire
+                                    </button>
+
+                                </form>
+
+                                {% endif %}
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div>📭</div>
+
+            <h3>No Certificates Found</h3>
+
+            <p>
+                Register your first applicant to create
+                a certificate.
+            </p>
+
+            <a href="/register" class="add-button">
+                Register Applicant
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="dashboard-navigation">
+
+        <a href="/register">
+            👤 Register Applicant
+        </a>
+
+        <a href="/logs">
+            📋 Audit Logs
+        </a>
+
+        <a href="/">
+            🏠 Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

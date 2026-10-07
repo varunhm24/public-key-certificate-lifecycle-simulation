@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Security Audit Logs</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h1>📋 Security Audit Logs</h1>
+
+            <p>
+                Monitor certificate lifecycle activities
+                and security events.
+            </p>
+        </div>
+
+        <a href="/dashboard" class="secondary-button">
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+    <div class="stats">
+
+        <div class="card active-card">
+
+            <div class="stat-icon">
+                📊
+            </div>
+
+            <div>
+                <h3>Total Events</h3>
+
+                <p class="stat-number">
+                    {{ logs|length }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FILTER SECTION -->
+    <div class="dashboard-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>🔎 Filter Audit Events</h2>
+
+                <p>
+                    Search and filter certificate security activity.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="filter-container">
+
+            <div class="filter-group">
+
+                <label for="userFilter">
+                    User ID
+                </label>
+
+                <input
+                    type="text"
+                    id="userFilter"
+                    placeholder="Search User ID..."
+                >
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="actionFilter">
+                    Action
+                </label>
+
+                <select id="actionFilter">
+
+                    <option value="ALL">
+                        All Actions
+                    </option>
+
+                    <option value="CERTIFICATE_ISSUED">
+                        Certificate Issued
+                    </option>
+
+                    <option value="CERTIFICATE_VERIFIED">
+                        Certificate Verified
+                    </option>
+
+                    <option value="CERTIFICATE_RENEWED">
+                        Certificate Renewed
+                    </option>
+
+                    <option value="CERTIFICATE_REVOKED">
+                        Certificate Revoked
+                    </option>
+
+                    <option value="CERTIFICATE_EXPIRED">
+                        Certificate Expired
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="secondary-button"
+                onclick="clearFilters()">
+
+                Clear Filters
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOG TABLE -->
+    <div class="dashboard-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>🛡 Certificate Security Activity</h2>
+
+                <p>
+                    Complete audit trail of certificate operations.
+                </p>
+            </div>
+
+        </div>
+
+
+        {% if logs %}
+
+        <div class="table-container">
+
+            <table id="logsTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>User ID</th>
+
+                        <th>Action</th>
+
+                        <th>Details</th>
+
+                        <th>Timestamp</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for log in logs %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+
+                        <td class="user-id">
+
+                            👤 {{ log[0] }}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if log[1] == "CERTIFICATE_ISSUED" %}
+
+                                <span class="log-badge issued">
+                                    🟢 ISSUED
+                                </span>
+
+                            {% elif log[1] == "CERTIFICATE_VERIFIED" %}
+
+                                <span class="log-badge verified">
+                                    🔍 VERIFIED
+                                </span>
+
+                            {% elif log[1] == "CERTIFICATE_RENEWED" %}
+
+                                <span class="log-badge renewed">
+                                    🔄 RENEWED
+                                </span>
+
+                            {% elif log[1] == "CERTIFICATE_REVOKED" %}
+
+                                <span class="log-badge revoked">
+                                    🔴 REVOKED
+                                </span>
+
+                            {% elif log[1] == "CERTIFICATE_EXPIRED" %}
+
+                                <span class="log-badge expired">
+                                    ⏰ EXPIRED
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge">
+                                    {{ log[1] }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+                            {{ log[2] }}
+                        </td>
+
+
+                        <td class="timestamp">
+
+                            🕒 {{ log[3] }}
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- NO RESULTS -->
+        <div
+            id="noResults"
+            class="empty-state"
+            style="display:none;">
+
+            <div class="empty-icon">
+                🔍
+            </div>
+
+            <h2>No matching events</h2>
+
+            <p>
+                No audit logs match your current filters.
+            </p>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                📋
+            </div>
+
+            <h2>No Audit Logs</h2>
+
+            <p>
+                Security activity will appear here
+                after certificate operations.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="page-navigation">
+
+        <a href="/" class="secondary-button">
+            🏠 Home
+        </a>
+
+        <a href="/register" class="primary-button">
+            👤 Register Applicant
+        </a>
+
+        <a href="/dashboard" class="secondary-button">
+            📊 Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            🔐 Public Key Certificate Lifecycle Simulator
+        </p>
+
+        <p>
+            Information Network and Security • VTU Project
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const userFilter =
+    document.getElementById("userFilter");
+
+const actionFilter =
+    document.getElementById("actionFilter");
+
+const table =
+    document.getElementById("logsTable");
+
+const noResults =
+    document.getElementById("noResults");
+
+
+function filterLogs() {
+
+    if (!table) {
+        return;
+    }
+
+    const userValue =
+        userFilter.value
+        .toLowerCase()
+        .trim();
+
+    const actionValue =
+        actionFilter.value;
+
+    const rows =
+        table.querySelectorAll("tbody tr");
+
+    let visibleRows = 0;
+
+
+    rows.forEach(row => {
+
+        const user =
+            row.cells[1]
+                .textContent
+                .toLowerCase();
+
+        const action =
+            row.cells[2]
+                .textContent
+                .trim();
+
+
+        const userMatch =
+            user.includes(userValue);
+
+
+        const actionMatch =
+            actionValue === "ALL"
+            ||
+            row.cells[2]
+                .textContent
+                .includes(
+                    actionValue.replace(
+                        "CERTIFICATE_",
+                        ""
+                    )
+                );
+
+
+        if (userMatch && actionMatch) {
+
+            row.style.display = "";
+
+            visibleRows++;
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+
+    if (noResults) {
+
+        noResults.style.display =
+            visibleRows === 0
+            ? "block"
+            : "none";
+
+    }
+
+}
+
+
+function clearFilters() {
+
+    userFilter.value = "";
+
+    actionFilter.value = "ALL";
+
+    filterLogs();
+
+}
+
+
+if (userFilter) {
+
+    userFilter.addEventListener(
+        "input",
+        filterLogs
+    );
+
+}
+
+
+if (actionFilter) {
+
+    actionFilter.addEventListener(
+        "change",
+        filterLogs
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

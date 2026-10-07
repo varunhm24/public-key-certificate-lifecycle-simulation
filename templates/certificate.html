@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>📜 Certificate Details</h1>
+
+            <p>
+                Detailed information about the digital certificate
+            </p>
+
+        </div>
+
+        <a href="/dashboard"
+           class="secondary-button">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- CERTIFICATE HEADER -->
+
+    <div class="certificate-header">
+
+        <div class="certificate-icon">
+            🔐
+        </div>
+
+        <div>
+
+            <h2>{{ certificate[0] }}</h2>
+
+            <p>
+                Public Key Infrastructure Certificate
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CERTIFICATE INFORMATION -->
+
+    <div class="certificate-grid">
+
+
+        <div class="certificate-item">
+
+            <span class="certificate-label">
+                👤 User ID
+            </span>
+
+            <strong>
+                {{ certificate[0] }}
+            </strong>
+
+        </div>
+
+
+        <div class="certificate-item">
+
+            <span class="certificate-label">
+                🔢 Serial Number
+            </span>
+
+            <strong class="serial-large">
+                {{ certificate[1] }}
+            </strong>
+
+        </div>
+
+
+        <div class="certificate-item">
+
+            <span class="certificate-label">
+                📅 Issued At
+            </span>
+
+            <strong>
+                {{ certificate[2] }}
+            </strong>
+
+        </div>
+
+
+        <div class="certificate-item">
+
+            <span class="certificate-label">
+                ⏳ Expires At
+            </span>
+
+            <strong>
+                {{ certificate[3] }}
+            </strong>
+
+        </div>
+
+
+        <div class="certificate-item">
+
+            <span class="certificate-label">
+                🛡️ Certificate Status
+            </span>
+
+            <strong>
+
+                {% if certificate[4] == "ACTIVE" %}
+
+                    <span class="status active">
+                        🟢 ACTIVE
+                    </span>
+
+                {% elif certificate[4] == "REVOKED" %}
+
+                    <span class="status revoked">
+                        🔴 REVOKED
+                    </span>
+
+                {% elif certificate[4] == "EXPIRED" %}
+
+                    <span class="status expired">
+                        🟡 EXPIRED
+                    </span>
+
+                {% elif certificate[4] == "RENEWED" %}
+
+                    <span class="status renewed">
+                        🔵 RENEWED
+                    </span>
+
+                {% endif %}
+
+            </strong>
+
+        </div>
+
+
+        <div class="certificate-item">
+
+            <span class="certificate-label">
+                🚫 Revocation Reason
+            </span>
+
+            <strong>
+                {{ certificate[5] or "Not revoked" }}
+            </strong>
+
+        </div>
+
+
+        <div class="certificate-item">
+
+            <span class="certificate-label">
+                🕒 Revoked At
+            </span>
+
+            <strong>
+                {{ certificate[6] or "N/A" }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- SECURITY INFORMATION -->
+
+    <div class="info-panel">
+
+        <h2>🔒 Security Information</h2>
+
+        <div class="security-grid">
+
+
+            <div>
+
+                <strong>
+                    Algorithm
+                </strong>
+
+                <span>
+                    RSA 2048-bit
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Signature
+                </strong>
+
+                <span>
+                    SHA-256
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Certificate Type
+                </strong>
+
+                <span>
+                    X.509 v3
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Certificate Authority
+                </strong>
+
+                <span>
+                    INS Root CA
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CERTIFICATE FILE OPERATIONS -->
+
+    <div class="info-panel">
+
+        <h2>📁 Certificate File Operations</h2>
+
+        <p>
+            View or download the cryptographic certificate
+            and associated public key.
+        </p>
+
+
+        <div class="page-navigation">
+
+
+            <a href="/certificate/pem/{{ certificate[0] }}"
+               class="primary-button">
+
+                📜 View PEM
+
+            </a>
+
+
+            <a href="/download/certificate/{{ certificate[0] }}"
+               class="secondary-button">
+
+                ⬇️ Download Certificate
+
+            </a>
+
+
+            <a href="/download/public-key/{{ certificate[0] }}"
+               class="secondary-button">
+
+                🔑 Download Public Key
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- VERIFICATION -->
+
+    <div class="info-panel">
+
+        <h2>🔍 Certificate Verification</h2>
+
+        <p>
+            Verify the certificate signature, issuer,
+            validity period and revocation status.
+        </p>
+
+
+        <div class="page-navigation">
+
+            <a href="/verify/{{ certificate[0] }}"
+               class="primary-button">
+
+                🔍 Verify Certificate
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="page-navigation">
+
+        <a href="/dashboard"
+           class="secondary-button">
+
+            📊 Dashboard
+
+        </a>
+
+
+        <a href="/"
+           class="secondary-button">
+
+            🏠 Home
+
+        </a>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            🔐 Public Key Certificate Lifecycle Simulator
+        </p>
+
+        <p>
+            Information Network and Security • VTU Project
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

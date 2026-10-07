@@ -1,0 +1,53 @@
+@"
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# Private keys and cryptographic files
+keys/
+ca/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Generated certificates
+certificates/
+
+# Database
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# VS Code
+.vscode/
+
+# Other IDE files
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+"@ | Set-Content .gitignore

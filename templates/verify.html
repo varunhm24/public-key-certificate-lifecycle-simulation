@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Verification</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>🔍 Certificate Verification</h1>
+
+            <p>
+                Cryptographic and lifecycle validation result
+            </p>
+
+        </div>
+
+        <a href="/dashboard" class="home-button">
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="verification-box
+        {% if result.valid %}
+            verification-valid
+        {% else %}
+            verification-invalid
+        {% endif %}
+    ">
+
+        {% if result.valid %}
+
+            <div class="verification-icon">
+                ✅
+            </div>
+
+            <h2>Certificate is VALID</h2>
+
+            <div class="verification-status">
+                TRUSTED
+            </div>
+
+            <p>
+                {{ result.message }}
+            </p>
+
+        {% else %}
+
+            <div class="verification-icon">
+                ❌
+            </div>
+
+            <h2>Certificate is INVALID</h2>
+
+            <div class="verification-status">
+                NOT TRUSTED
+            </div>
+
+            <p>
+                {{ result.message }}
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- USER INFORMATION -->
+
+    <div class="info-panel">
+
+        <h2>👤 Certificate Subject</h2>
+
+        <div class="subject-box">
+
+            <span>User ID</span>
+
+            <strong>
+                {{ user_id }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- VERIFICATION CHECKS -->
+
+    <div class="info-panel">
+
+        <h2>🛡️ Verification Checks</h2>
+
+        <div class="verification-checks">
+
+            <div class="check-item">
+                <span>🔐</span>
+                <strong>Certificate Signature</strong>
+                <small>CA signature validation</small>
+            </div>
+
+            <div class="check-item">
+                <span>🏛️</span>
+                <strong>Trusted Issuer</strong>
+                <small>Root CA verification</small>
+            </div>
+
+            <div class="check-item">
+                <span>📅</span>
+                <strong>Validity Period</strong>
+                <small>Certificate date validation</small>
+            </div>
+
+            <div class="check-item">
+                <span>🚫</span>
+                <strong>Revocation Status</strong>
+                <small>Database status verification</small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="page-navigation">
+
+        <a href="/dashboard">
+            📊 Dashboard
+        </a>
+
+        <a href="/">
+            🏠 Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

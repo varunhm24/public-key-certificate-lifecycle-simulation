@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate PEM</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>📜 X.509 Certificate</h1>
+
+            <p>
+                PEM representation of the digital certificate.
+            </p>
+
+        </div>
+
+        <a href="/dashboard"
+           class="secondary-button">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+
+    <div class="dashboard-section">
+
+        <h2>🔐 Certificate Information</h2>
+
+        <p>
+            <strong>User ID:</strong>
+            {{ user_id }}
+        </p>
+
+        <p>
+            <strong>Format:</strong>
+            PEM
+        </p>
+
+        <p>
+            <strong>Standard:</strong>
+            X.509
+        </p>
+
+        <div class="pem-container">
+
+            <pre>{{ certificate_data }}</pre>
+
+        </div>
+
+    </div>
+
+
+    <div class="page-navigation">
+
+        <a href="/download/certificate/{{ user_id }}"
+           class="primary-button">
+
+            ⬇️ Download Certificate
+
+        </a>
+
+        <a href="/download/public-key/{{ user_id }}"
+           class="secondary-button">
+
+            🔑 Download Public Key
+
+        </a>
+
+        <a href="/certificate/{{ user_id }}"
+           class="secondary-button">
+
+            ← Certificate Details
+
+        </a>
+
+    </div>
+
+
+    <div class="footer">
+
+        <p>
+            🔐 Public Key Certificate Lifecycle Simulator
+        </p>
+
+        <p>
+            Information Network and Security • VTU Project
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
